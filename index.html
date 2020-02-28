@@ -6,7 +6,8 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="./css/materialize.min.css"  media="screen,projection"/>
     <!--Let browser know website is optimized for mobile-->
-
+    <!--google font-->
+    <link href="https://fonts.googleapis.com/css?family=Lacquer|Roboto|Source+Sans+Pro|Squada+One|Sriracha&display=swap" rel="stylesheet">
     <!--調色盤-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/> <!-- 'classic' theme -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/monolith.min.css"/> <!-- 'monolith' theme -->
@@ -118,8 +119,9 @@
       }
 
       .custom-class{
+        position:absolute;
         width: 350px !important;
-        top: 460px !important;
+        top: 68% !important;
         left: 13px !important;
       }
 
@@ -201,6 +203,14 @@
       .btn:hover,.btn-large:hover,.btn-floating:hover{
         background-color: #eeeeee!important;
       }
+
+      #test{
+        margin-left: 15px;
+        display: inline-block;
+        border: 1px solid #eaeaea;
+        width:340px;
+        height:350px;
+      }
     </style>
   </head>
   <body>
@@ -209,6 +219,10 @@
       <div class="combine">
         <a class="btn-floating btn effect "><i class="material-icons">home</i></a>
         <span>首頁</span>
+      </div>
+      <div class="combine right">
+        <a class="btn-floating btn effect" id="file_download"><i class="material-icons">file_download</i></a>
+        <span>完成</span>
       </div>
       <div class="combine right">
         <a class="btn-floating btn effect " id="moveup"><i class="material-icons">arrow_upward</i></a>
@@ -231,6 +245,8 @@
     <div class="container">
       <canvas id="canvas"></canvas>
     </div>
+
+    <img id="test">
 
     <div id="addtool" class="fixed-action-btn">
       <a class="btn-floating btn-large effect modal-trigger" href="#modaltool">
@@ -287,7 +303,7 @@
             <span>斜體</span>
           </div>
           <div class="combine_bar_2">
-            <a class="btn-floating btn effect yellow lighten-1 modal-trigger" id="font_type" href="#font_type"><i id="tool4" class="material-icons">font_download</i></a>
+            <a class="btn-floating btn effect yellow lighten-1 modal-trigger" id="" href="#font_type"><i id="tool4" class="material-icons">font_download</i></a>
             <span>字型</span>
           </div>
           <div class="combine_bar_2">
@@ -358,6 +374,47 @@
       </div>
       <div class="close">
         <a class="btn-floating btn effect  modal-close"><i class="material-icons">close</i></a>
+      </div>
+    </div>
+
+
+    <!-- Modal Structure -->
+    <div id="font_type" class="modal bottom-sheet">
+      <div class="modal-content">
+        <h5>Modal Header</h5>
+        <div class="collection">
+          <a id="Times New Roman" class="collection-item avatar modal-close">
+            <img src="" class="circle">
+            <span class="title">Times New Roman (Default)</span>
+          </a>
+          <a id="helvetica" class="collection-item avatar modal-close">
+            <img src="" class="circle">
+            <span class="title">helvetica</span>
+          </a>
+          <a id="Lacquer" class="collection-item avatar modal-close">
+            <img src="" class="circle">
+            <span class="title">Lacquer</span>
+          </a>
+          <a id="Squada One" class="collection-item avatar modal-close">
+            <img src="" class="circle">
+            <span class="title">Squada One</span>
+          </a>
+          <a id="Sriracha" class="collection-item avatar modal-close">
+            <img src="" class="circle">
+            <span class="title">Sriracha</span>
+          </a>
+          <a id="Roboto" class="collection-item avatar modal-close">
+            <img src="" class="circle">
+            <span class="title">Roboto</span>
+          </a>
+          <a id="Source Sans Pro" class="collection-item avatar modal-close">
+            <img src="" class="circle">
+            <span class="title">Source Sans Pro</span>
+          </a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
       </div>
     </div>
 
@@ -476,6 +533,16 @@
           top:150,
           left:70
         });
+        iText.set({
+              transparentCorners: false,
+              borderColor: 'blue', // 邊框顏色
+              cornerColor: 'grey', // 控制點填滿色
+              cornerSize: 10, // 控制點大小
+              cornerStrokeColor: 'blue', // 控制點邊框色
+              padding: 10,
+              borderDashArray: [5, 5],
+              cornerStyle: 'circle'
+            })
         canvas.add(iText);
         save();
       }
@@ -497,6 +564,16 @@
             top: 120,
             left: 120
           })
+          circle.set({
+              transparentCorners: false,
+              borderColor: 'blue', // 邊框顏色
+              cornerColor: 'grey', // 控制點填滿色
+              cornerSize: 10, // 控制點大小
+              cornerStrokeColor: 'blue', // 控制點邊框色
+              padding: 10,
+              borderDashArray: [5, 5],
+              cornerStyle: 'circle'
+            })
           canvas.add(circle)
           save()
         }
@@ -506,9 +583,19 @@
             height: 50,
             fill: '#eeeeee',
             top: 120,
-            left: 120,
-            
+            left: 120 
           })
+
+          rect.set({
+              transparentCorners: false,
+              borderColor: 'blue', // 邊框顏色
+              cornerColor: 'grey', // 控制點填滿色
+              cornerSize: 10, // 控制點大小
+              cornerStrokeColor: 'blue', // 控制點邊框色
+              padding: 10,
+              borderDashArray: [5, 5],
+              cornerStyle: 'circle'
+            })
           canvas.add(rect)
           save()
         }
@@ -520,6 +607,16 @@
             top: 120,
             left: 120
           })
+          triangle.set({
+              transparentCorners: false,
+              borderColor: 'blue', // 邊框顏色
+              cornerColor: 'grey', // 控制點填滿色
+              cornerSize: 10, // 控制點大小
+              cornerStrokeColor: 'blue', // 控制點邊框色
+              padding: 10,
+              borderDashArray: [5, 5],
+              cornerStyle: 'circle'
+            })
           canvas.add(triangle)
           save()
         }
@@ -535,6 +632,16 @@
               angle: 15,
               left: 120,
               crossOrigin:'anonymous'
+            })
+            image.set({
+              transparentCorners: false,
+              borderColor: 'blue', // 邊框顏色
+              cornerColor: 'grey', // 控制點填滿色
+              cornerSize: 10, // 控制點大小
+              cornerStrokeColor: 'blue', // 控制點邊框色
+              padding: 10,
+              borderDashArray: [5, 5],
+              cornerStyle: 'circle'
             })
             canvas.add(image)
             save()
@@ -575,6 +682,16 @@
           left: 100,
           crossOrigin:'anonymous'
         })
+        image.set({
+          transparentCorners: false,
+          borderColor: 'blue', // 邊框顏色
+          cornerColor: 'grey', // 控制點填滿色
+          cornerSize: 10, // 控制點大小
+          cornerStrokeColor: 'blue', // 控制點邊框色
+          padding: 10,
+          borderDashArray: [5, 5],
+          cornerStyle: 'circle'
+        })
         canvas.add(image)
       })
 
@@ -613,6 +730,15 @@
         canvas.renderAll();
       })
 
+      const ftype = document.getElementById('font_type')
+      ftype.addEventListener('click',function(e){
+        if(e.target.id != 'Times New Roman'){
+          console.log(e.target.id)
+          canvas.getActiveObject().set({fontFamily:e.target.id})
+          canvas.renderAll();
+        }      
+      })
+
       canvas.on('selection:updated',function(e){
         console.log(e.target.get('type'))
         if(e.target.get('type') == 'i-text'){
@@ -638,6 +764,12 @@
         }
 
 
+      })
+
+      const fdownload = document.getElementById('file_download')
+      fdownload.addEventListener('click',function(){
+        console.log(canvas.toDataURL())
+        document.getElementById('test').setAttribute('src',canvas.toDataURL())
       })
 
       //選取物件要跳出編輯 bar
@@ -673,25 +805,49 @@
   
       })
       */
+      //ar zoomStartScale;
       canvas.on({
         'touch:gesture': function(e) {
             if (e.e.touches && e.e.touches.length == 2) {
                 pausePanning = true;
                 var point = new fabric.Point(e.self.x, e.self.y);
                 if (e.self.state == "start") {
-                    zoomStartScale = self.canvas.getZoom();
+                  zoomStartScale = self.canvas.getZoom();
                 }
                 var delta = zoomStartScale * e.self.scale;
                 self.canvas.zoomToPoint(point, delta);
                 pausePanning = false;
             }
-        }})
+        },
+        'object:selected': function() {
+            pausePanning = true;
+        },
+        'selection:cleared': function() {
+            pausePanning = false;
+        },
+        'touch:drag': function(e) {
+            if (pausePanning == false && undefined != e.e.layerX && undefined != e.e.layerY) {
+                currentX = e.e.layerX;
+                currentY = e.e.layerY;
+                xChange = currentX - lastX;
+                yChange = currentY - lastY;
+
+                if( (Math.abs(currentX - lastX) <= 50) && (Math.abs(currentY - lastY) <= 50)) {
+                    var delta = new fabric.Point(xChange, yChange);
+                    canvas.relativePan(delta);
+                }
+
+                lastX = e.e.layerX;
+                lastY = e.e.layerY;
+            }
+        }
+    });
 
 
       canvas.on('mouse:down', e => { 
         //console.log(e);
         const active = canvas.getActiveObject();
-        console.log(active.get('type'))
+        console.log(active.get('type'));
         if(canvas.getActiveObject()){
           pickr.on('change',(color,instance)=>{
             console.log(color.toRGBA().toString());
