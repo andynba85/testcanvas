@@ -424,13 +424,15 @@
     <script src="./js/init.js"></script>
     <script type="text/javascript" src="./js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.2/fabric.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script>
       
       const canvas = new fabric.Canvas('canvas',{
         width: 340,
         height:350
       });
+
+      alert('fabric.isTouchSupported=' + fabric.isTouchSupported); 
       
       var $input = $("input.pickr-field");
       var current_color = $(".pickr-field").val() || null;
@@ -784,41 +786,7 @@
         document.getElementById('addtool').style.bottom = "80px";
       })
 
-      canvas.on('object:added',function(){
-        var bbScope = this; 
-        var hammer = new Hammer.Manager(this.upperCanvasEl); 
-        var pinch = new Hammer.Pinch(); 
-        hammer.add([pinch]); 
-
-        hammer.on('pinch', function (ev) { 
-            // Set the scale and render only if we have a valid pinch (inside the object) 
-            if (bbScope._validPinch) { 
-            bbScope.set('scaleX', ev.scale); 
-            bbScope.set('scaleY', ev.scale); 
-            bbScope.canvas.renderAll(); 
-            } 
-        }); 
-        hammer.on('pinchend', function (ev) { 
-            bbScope._validPinch = false; 
-        }); 
-        hammer.on('pinchcancel', function (ev) { 
-            bbScope._validPinch = false; 
-        }); 
-        hammer.on('pinchstart', function (ev) { 
-            // Convert mouse coordinates to canvas coordinates 
-            ev.clientX = ev.center.x; 
-            ev.clientY = ev.center.y; 
-
-            // Check if the pinch was started inside this object 
-            if (bbScope.canvas) { 
-            var p = bbScope.canvas.getPointer(ev); 
-            bbScope._validPinch = bbScope.containsPoint(p); 
-            } 
-            else { 
-            bbScope._validPinch = false; 
-            } 
-        }); 
-      })
+      
 
     /*
       window.onclick = function(event) {
@@ -834,6 +802,62 @@
         document.getElementById('addtool').style.bottom = "10px";
 
       })
+
+      var angleScale = {
+        angle: 0,
+        scale: 1
+      }
+      var gestureArea = document.getElementById('canvas');
+      //var scaleElement = document.getElementById('scale-element');
+
+      interact(gestureArea)
+      .gesturable({
+        listeners: {
+          start (event) {
+            angleScale.angle -= event.angle
+          },
+          move (event) {
+            // document.body.appendChild(new Text(event.scale))
+            var currentAngle = event.angle + angleScale.angle
+            var currentScale = event.scale * angleScale.scale
+
+            canvas.getActiveObject().style.webkitTransform =
+            canvas.getActiveObject().style.transform =
+              'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'
+
+          },
+          end (event) {
+            angleScale.angle = angleScale.angle + event.angle
+            angleScale.scale = angleScale.scale * event.scale
+          }
+        }
+      })
+
+      /*
+      var info = document.getElementById('info'); 
+      canvas.on({ 
+        'touch:gesture': function() { 
+          var text = document.createTextNode(' Gesture '); 
+          info.insertBefore(text, info.firstChild); 
+        }, 
+        'touch:drag': function() { 
+          var text = document.createTextNode(' Dragging '); 
+          info.insertBefore(text, info.firstChild); 
+        }, 
+        'touch:orientation': function() { 
+          var text = document.createTextNode(' Orientation '); 
+          info.insertBefore(text, info.firstChild); 
+        }, 
+        'touch:shake': function() { 
+          var text = document.createTextNode(' Shaking '); 
+          info.insertBefore(text, info.firstChild); 
+        }, 
+        'touch:longpress': function() { 
+          var text = document.createTextNode(' Longpress '); 
+          info.insertBefore(text, info.firstChild); 
+        } 
+      }); 
+      */
       /*
 
       canvas.on('selection:created',function(e){
