@@ -15,11 +15,10 @@
     <!-- Modern or es5 bundle -->
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.es5.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0"/>
     <style>
       
       body{
-        height: fill-available;
         margin: 0; 
         padding:0;
         background-color: #e0e0e0;
@@ -425,6 +424,7 @@
     <script src="./js/init.js"></script>
     <script type="text/javascript" src="./js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.2/fabric.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
     <script>
       
       const canvas = new fabric.Canvas('canvas',{
@@ -782,6 +782,42 @@
         document.getElementById('Sidenav').style.height = "70px";
         document.getElementById('fade-in').style.opacity = "1";
         document.getElementById('addtool').style.bottom = "80px";
+      })
+
+      canvas.on('object:added',function(){
+        var bbScope = this; 
+        var hammer = new Hammer.Manager(this.upperCanvasEl); 
+        var pinch = new Hammer.Pinch(); 
+        hammer.add([pinch]); 
+
+        hammer.on('pinch', function (ev) { 
+            // Set the scale and render only if we have a valid pinch (inside the object) 
+            if (bbScope._validPinch) { 
+            bbScope.set('scaleX', ev.scale); 
+            bbScope.set('scaleY', ev.scale); 
+            bbScope.canvas.renderAll(); 
+            } 
+        }); 
+        hammer.on('pinchend', function (ev) { 
+            bbScope._validPinch = false; 
+        }); 
+        hammer.on('pinchcancel', function (ev) { 
+            bbScope._validPinch = false; 
+        }); 
+        hammer.on('pinchstart', function (ev) { 
+            // Convert mouse coordinates to canvas coordinates 
+            ev.clientX = ev.center.x; 
+            ev.clientY = ev.center.y; 
+
+            // Check if the pinch was started inside this object 
+            if (bbScope.canvas) { 
+            var p = bbScope.canvas.getPointer(ev); 
+            bbScope._validPinch = bbScope.containsPoint(p); 
+            } 
+            else { 
+            bbScope._validPinch = false; 
+            } 
+        }); 
       })
 
     /*
