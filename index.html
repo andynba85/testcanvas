@@ -820,10 +820,13 @@
             // document.body.appendChild(new Text(event.scale))
             var currentAngle = event.angle + angleScale.angle
             var currentScale = event.scale * angleScale.scale
-
-            canvas.getActiveObject().style.webkitTransform =
-            canvas.getActiveObject().style.transform =
-              'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'
+            console.log('hi')
+            console.log(event.target)
+            event.target.set({
+              width:this.width*currentScale,
+              height:this.height*currentScale,
+              angle:this.angle*currentAngle
+            })
 
           },
           end (event) {
